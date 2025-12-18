@@ -15,7 +15,7 @@
 
 <main
   class="relative flex min-h-screen flex-col items-center justify-center overflow-hidden
-         bg-linear-135 from-slate-950 via-blue-950 to-zinc-950 p-6"
+         bg-linear-135 from-slate-950 via-blue-950 to-zinc-950 p-6 font-['Noto_Sans']"
 >
   {@render children()}
   <footer
@@ -39,7 +39,9 @@
       >
         <DropdownMenu.Label>My Account</DropdownMenu.Label>
         <DropdownMenu.Group>
-          <DropdownMenu.Item onclick={() => goto('/preferences')}>Account Preferences</DropdownMenu.Item>
+          <DropdownMenu.Item onclick={() => goto('/preferences')}
+            >Account Preferences</DropdownMenu.Item
+          >
         </DropdownMenu.Group>
       </DropdownMenu.Content>
     </DropdownMenu.Root>

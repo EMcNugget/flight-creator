@@ -57,12 +57,14 @@
               <Input
                 class="bg-white/10 text-white uppercase placeholder:text-white/50 placeholder:normal-case focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter Starting Airport"
+                maxlength="3"
                 {...props}
                 bind:value={$formData.base}
               />
             {/snippet}
           </Form.Control>
           <Form.Description />
+          <Form.FieldErrors />
         </Form.Field>
         <Form.Field {form} name="airline">
           <Form.Control>
@@ -71,12 +73,14 @@
               <Input
                 class="bg-white/10 text-white uppercase placeholder:text-white/50 placeholder:normal-case focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter Airline"
+                maxlength="2"
                 {...props}
                 bind:value={$formData.airline}
               />
             {/snippet}
           </Form.Control>
           <Form.Description />
+          <Form.FieldErrors />
         </Form.Field>
         <Form.Field {form} name="aircraftType">
           <Form.Control>
@@ -85,12 +89,14 @@
               <Input
                 class="bg-white/10 text-white uppercase placeholder:text-white/50 placeholder:normal-case focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter Aircraft Type"
+                maxlength="4"
                 {...props}
                 bind:value={$formData.aircraftType}
               />
             {/snippet}
           </Form.Control>
           <Form.Description />
+          <Form.FieldErrors />
         </Form.Field>
         <Form.Field {form} name="days">
           <Form.Control>
@@ -108,6 +114,7 @@
             {/snippet}
           </Form.Control>
           <Form.Description />
+          <Form.FieldErrors />
         </Form.Field>
       </div>
       <Dialog.Root>
