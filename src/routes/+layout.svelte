@@ -16,7 +16,7 @@
 <main
   class=" flex min-h-screen flex-col items-center justify-between bg-linear-135 from-slate-950 via-blue-950 to-zinc-950 font-['Ubuntu'] tracking-wide"
 >
-  <div class="my-auto">
+  <div class="my-auto flex w-full flex-col items-center justify-center">
     {@render children()}
   </div>
   <footer class="grid w-full items-center py-4 text-sm text-slate-500">
