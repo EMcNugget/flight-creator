@@ -124,3 +124,8 @@
   font-family: "Noto Sans";
   src: url(..//lib/fonts/NotoSans-Regular.ttf);
 }
+
+@font-face {
+  font-family: "Ubuntu";
+  src: url(..//lib/fonts/Ubuntu-Regular.ttf);
+}

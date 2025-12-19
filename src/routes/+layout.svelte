@@ -14,37 +14,12 @@
 </svelte:head>
 
 <main
-  class="relative flex min-h-screen flex-col items-center justify-center overflow-hidden
-         bg-linear-135 from-slate-950 via-blue-950 to-zinc-950 p-6 font-['Noto_Sans']"
+  class=" flex min-h-screen flex-col items-center justify-between bg-linear-135 from-slate-950 via-blue-950 to-zinc-950 font-['Ubuntu'] tracking-wide"
 >
-  {@render children()}
-  <footer
-    class="absolute bottom-0 grid w-full grid-cols-3 items-center px-4 py-2 text-sm text-slate-500"
-  >
-    <DropdownMenu.Root>
-      <DropdownMenu.Trigger>
-        {#snippet child({ props })}
-          <button {...props} class="cursor-pointer hover:opacity-80">
-            <Avatar.Root>
-              <Avatar.Image src="https://github.com/shadcn.png" alt="@shadcn" />
-              <Avatar.Fallback>CN</Avatar.Fallback>
-            </Avatar.Root>
-          </button>
-        {/snippet}
-      </DropdownMenu.Trigger>
-
-      <DropdownMenu.Content
-        class="mb-2 w-56 border border-white/20 bg-white/10 text-white shadow-lg backdrop-blur-lg"
-        align="start"
-      >
-        <DropdownMenu.Label>My Account</DropdownMenu.Label>
-        <DropdownMenu.Group>
-          <DropdownMenu.Item onclick={() => goto('/preferences')}
-            >Account Preferences</DropdownMenu.Item
-          >
-        </DropdownMenu.Group>
-      </DropdownMenu.Content>
-    </DropdownMenu.Root>
+  <div class="my-auto">
+    {@render children()}
+  </div>
+  <footer class="grid w-full items-center py-4 text-sm text-slate-500">
     <p class="justify-self-center">
       Powered by <a
         href="https://www.flightaware.com/commercial/aeroapi/"

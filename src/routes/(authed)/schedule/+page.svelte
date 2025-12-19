@@ -1,192 +1,127 @@
 <script lang="ts">
-  import { Button } from '$lib/components/ui/button';
-  import * as Card from '$lib/components/ui/card/index.js';
-  import * as Form from '$lib/components/ui/form/index.js';
-  import * as Dialog from '$lib/components/ui/dialog/index.js';
-  import Switch from '$lib/components/ui/switch/switch.svelte';
-  import ArrowRight from '@lucide/svelte/icons/arrow-right';
-  import Input from '$lib/components/ui/input/input.svelte';
-  import { bidSchema } from '../bidSchema.js';
-  import { superForm } from 'sveltekit-superforms/client';
-  import { zod4Client } from 'sveltekit-superforms/adapters';
+    import ScheduleCard from "./ScheduleCard.svelte";
+    import * as Pagination from "$lib/components/ui/pagination/index.js";
+    import ChevronLeft from "@lucide/svelte/icons/chevron-left";
+    import ChevronRight from "@lucide/svelte/icons/chevron-right";
 
-  let { data } = $props();
+  let bidData = [{
+    flightNumber: "DL123",
+    departure: {
+      airport: "ATL",
+      time: "08:00",
+      gate: "B21",
+    },
+    arrival: {
+      airport: "JFK",
+      time: "10:00",
+      gate: "A3",
+    },
+    blockTime: "02:00",
+    equipment: "B738",
+  },
+  {
+    flightNumber: "AA456",
+    departure: {
+      airport: "LAX",
+      time: "09:30",
+      gate: "C12",
+    },
+    arrival: {
+      airport: "ORD",
+      time: "15:00",
+      gate: "D5",
+    },
+    blockTime: "03:30",
+    equipment: "A321",
+  },
+  {
+    flightNumber: "UA789",
+    departure: {
+      airport: "SFO",
+      time: "07:15",
+      gate: "E7",
+    },
+    arrival: {
+      airport: "DEN",
+      time: "10:45",
+      gate: "F2",
+    },
+    blockTime: "02:30",
+    equipment: "B737",
+  },
+   {
+    flightNumber: "UA789",
+    departure: {
+      airport: "SFO",
+      time: "07:15",
+      gate: "E7",
+    },
+    arrival: {
+      airport: "DEN",
+      time: "10:45",
+      gate: "F2",
+    },
+    blockTime: "02:30",
+    equipment: "B737",
+  },
+];
 
-  const form = superForm(data.form, {
-    validators: zod4Client(bidSchema)
-  });
-
-  form;
-
-  const { form: formData, enhance, errors } = form;
 </script>
 
-<div class="mb-12 flex flex-col items-center gap-2">
-  <h1 class="text-4xl font-bold text-white text-shadow-lg">vBS - Virtual Bid System</h1>
-  <p class="font-semibold text-white text-shadow-lg">Your flight sim schedule made simple</p>
-</div>
-<Card.Root
-  class="
-      relative w-full max-w-lg
-      rounded-2xl
-      border
-      border-white/15
-      bg-white/10 shadow-2xl
-      shadow-black/60 backdrop-blur-xl  
-      before:pointer-events-none before:absolute
-      before:inset-0
-      before:rounded-2xl before:bg-linear-to-br before:from-white/20 before:via-transparent
-      before:to-transparent
-      before:opacity-50
-    "
->
-  <Card.Header class="border-b border-white/10">
-    <Card.Title class="text-xl text-white">Generate Your Schedule</Card.Title>
-    <Card.Description class="text-slate-300">
-      Fill out the form below to create a personalized flight schedule.
-    </Card.Description>
-  </Card.Header>
+<div class="flex flex-col items-center justify-between space-y-10">
+  <h1 class="text-3xl font-bold text-slate-200 text-shadow-lg">Current Bid</h1>
 
-  <Card.Content class="space-y-4 text-slate-200">
-    <form method="POST" use:enhance class=" space-y-6">
-      <div class="grid-cols-2 gap-4 md:grid">
-        <Form.Field {form} name="base">
-          <Form.Control>
-            {#snippet children({ props })}
-              <Form.Label>Base</Form.Label>
-              <Input
-                class="bg-white/10 text-white uppercase placeholder:text-white/50 placeholder:normal-case focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter Starting Airport"
-                maxlength="3"
-                {...props}
-                bind:value={$formData.base}
-              />
-            {/snippet}
-          </Form.Control>
-          <Form.Description />
-          <Form.FieldErrors />
-        </Form.Field>
-        <Form.Field {form} name="airline">
-          <Form.Control>
-            {#snippet children({ props })}
-              <Form.Label>Airline</Form.Label>
-              <Input
-                class="bg-white/10 text-white uppercase placeholder:text-white/50 placeholder:normal-case focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter Airline"
-                maxlength="2"
-                {...props}
-                bind:value={$formData.airline}
-              />
-            {/snippet}
-          </Form.Control>
-          <Form.Description />
-          <Form.FieldErrors />
-        </Form.Field>
-        <Form.Field {form} name="aircraftType">
-          <Form.Control>
-            {#snippet children({ props })}
-              <Form.Label>Aircraft</Form.Label>
-              <Input
-                class="bg-white/10 text-white uppercase placeholder:text-white/50 placeholder:normal-case focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter Aircraft Type"
-                maxlength="4"
-                {...props}
-                bind:value={$formData.aircraftType}
-              />
-            {/snippet}
-          </Form.Control>
-          <Form.Description />
-          <Form.FieldErrors />
-        </Form.Field>
-        <Form.Field {form} name="days">
-          <Form.Control>
-            {#snippet children({ props })}
-              <Form.Label>Days</Form.Label>
-              <Input
-                min="1"
-                type="number"
-                max="5"
-                class="bg-white/10 text-white placeholder:text-white/50 focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter Number of Days"
-                {...props}
-                bind:value={$formData.days}
-              />
-            {/snippet}
-          </Form.Control>
-          <Form.Description />
-          <Form.FieldErrors />
-        </Form.Field>
-      </div>
-      <Dialog.Root>
-        <Dialog.Trigger
-          class="text-sm text-slate-300 hover:cursor-pointer hover:text-blue-400 hover:underline"
-        >
-          <div class="flex items-center">
-            <span>Advanced Settings</span>
-            <ArrowRight class="mt-1 ml-0.5" size={16} />
-          </div>
-        </Dialog.Trigger>
-        <Dialog.Content
-          class="w-1/4 rounded-2xl border border-white/15 bg-white/10 p-6 shadow-2xl shadow-black/60 backdrop-blur-xl"
-        >
-          <Dialog.Header>
-            <Dialog.Title class="text-xl text-white">Advanced Settings</Dialog.Title>
-            <Dialog.Description class="text-slate-400">
-              Configure additional options for your flight schedule.
-            </Dialog.Description>
-          </Dialog.Header>
-          <div class="flex flex-col space-y-4">
-            <Form.Field {form} name="preferAirportsWithATC">
-              <Form.Control>
-                {#snippet children({ props })}
-                  <div class="flex gap-2 text-white">
-                    <Form.Label>Prefer Airports with ATC</Form.Label>
-                    <Switch
-                      {...props}
-                      bind:checked={$formData.preferAirportsWithATC}
-                      class="data-[state=checked]:bg-blue-500 hover:data-[state=checked]:bg-blue-600"
-                    />
-                  </div>
-                {/snippet}
-              </Form.Control>
-            </Form.Field>
-            <Form.Field {form} name="preferAirportsWithScenery">
-              <Form.Control>
-                {#snippet children({ props })}
-                  <div class="flex gap-2 text-white">
-                    <Form.Label>Prefer Airports with Scenery</Form.Label>
-                    <Switch
-                      {...props}
-                      bind:checked={$formData.preferAirportsWithScenery}
-                      class="data-[state=checked]:bg-blue-500 hover:data-[state=checked]:bg-blue-600"
-                    />
-                  </div>
-                {/snippet}
-              </Form.Control>
-            </Form.Field>
-            <Form.Field {form} name="part117">
-              <Form.Control>
-                {#snippet children({ props })}
-                  <div class="flex gap-2 text-white">
-                    <Form.Label>Part 117</Form.Label>
-                    <Switch
-                      {...props}
-                      bind:checked={$formData.part117}
-                      class="data-[state=checked]:bg-blue-500 hover:data-[state=checked]:bg-blue-600"
-                    />
-                  </div>
-                {/snippet}
-              </Form.Control>
-            </Form.Field>
-          </div>
-        </Dialog.Content>
-      </Dialog.Root>
-      <Button
-        class="text-md w-full bg-blue-500 hover:cursor-pointer hover:bg-blue-600 hover:shadow-lg"
-        type="submit"
+  <div class="xs:grid-cols-1 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+    {#each bidData as props}
+      <ScheduleCard
+        flightNumber={props.flightNumber}
+        departure={props.departure}
+        arrival={props.arrival}
+        blockTime={props.blockTime}
+        equipment={props.equipment}
+      />
+    {/each}
+  </div>
+
+  <Pagination.Root count={5} perPage={1}>
+    {#snippet children({ pages, currentPage })}
+      <Pagination.Content
+        class="flex items-center gap-1 rounded-2xl
+         border border-white/10 bg-white/5 px-2
+         py-1 text-slate-300 backdrop-blur-sm"
       >
-        Generate Schedule
-      </Button>
-    </form>
-  </Card.Content>
-</Card.Root>
+        <Pagination.Item>
+          <Pagination.PrevButton
+            class="rounded-2xl bg-transparent hover:bg-blue-600 hover:text-slate-200"
+          >
+            <ChevronLeft />
+          </Pagination.PrevButton>
+        </Pagination.Item>
+        {#each pages as page (page.key)}
+          {#if page.type === "ellipsis"}
+            <Pagination.Item>
+              <Pagination.Ellipsis />
+            </Pagination.Item>
+          {:else}
+            <Pagination.Item>
+              <Pagination.Link
+                {page}
+                isActive={currentPage === page.value}
+                class={currentPage === page.value ? 'rounded-2xl bg-blue-500 text-slate-200 hover:bg-blue-600 hover:text-slate-200' : 'hover:bg-white/10'}
+              >
+                {page.value}
+              </Pagination.Link>
+            </Pagination.Item>
+          {/if}
+        {/each}
+        <Pagination.Item>
+          <Pagination.NextButton
+            class="rounded-2xl bg-transparent hover:bg-blue-600 hover:text-slate-200"
+          >
+            <ChevronRight />
+          </Pagination.NextButton>
+        </Pagination.Item>
+      </Pagination.Content>
+    {/snippet}
+  </Pagination.Root>
+</div>
