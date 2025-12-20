@@ -4,17 +4,19 @@
   import ArrowRight from '@lucide/svelte/icons/arrow-right';
   import ScheduleItem from './ScheduleItem.svelte';
 
-  let {
-    flightNumber,
-    departure,
-    arrival,
-    blockTime,
-    equipment
-  } = $props();
+  let { flightNumber, departure, arrival, blockTime, equipment, showNextLeg } = $props();
 </script>
 
-<Card.Root
-  class="
+<div class="flex flex-col items-center justify-center space-y-4">
+  <div
+    class="flex flex-row items-center rounded-xl bg-green-500 pr-2 pl-1 text-sm text-slate-200"
+    class:invisible={!showNextLeg}
+  >
+    <ArrowRight size={16} class="mr-2" />
+    Next Leg
+  </div>
+  <Card.Root
+    class="
       relative
       w-full
       max-w-xs
@@ -29,33 +31,34 @@
       before:to-transparent
       before:opacity-50
     "
->
-  <Card.Content class="space-y-4 text-slate-200">
-    <div class="flex w-full flex-row items-center justify-between">
-      <p class="text-xl font-semibold">{flightNumber}</p>
+  >
+    <Card.Content class="space-y-4 text-slate-200">
+      <div class="flex w-full flex-row items-center justify-between">
+        <p class="text-xl font-semibold">{flightNumber}</p>
 
-      <div class="flex flex-row items-center space-x-1 text-3xl font-semibold">
-        <p>{departure.airport}</p>
-        <ArrowRight />
-        <p>{arrival.airport}</p>
+        <div class="flex flex-row items-center space-x-1 text-3xl font-semibold">
+          <p>{departure.airport}</p>
+          <ArrowRight />
+          <p>{arrival.airport}</p>
+        </div>
       </div>
-    </div>
 
-    <div class="grid w-full grid-cols-2 gap-2">
-      <ScheduleItem label="Dep" value={departure.time} />
-      <ScheduleItem label="Gate" value={departure.gate} />
-      <ScheduleItem label="Arr" value={arrival.time} />
-      <ScheduleItem label="Gate" value={arrival.gate} />
-      <ScheduleItem label="Block Time" value={blockTime} />
-      <ScheduleItem label="Equip" value={equipment} />
-    </div>
+      <div class="grid w-full grid-cols-2 gap-2">
+        <ScheduleItem label="Dep" value={departure.time} />
+        <ScheduleItem label="Gate" value={departure.gate} />
+        <ScheduleItem label="Arr" value={arrival.time} />
+        <ScheduleItem label="Gate" value={arrival.gate} />
+        <ScheduleItem label="Block Time" value={blockTime} />
+        <ScheduleItem label="Equip" value={equipment} />
+      </div>
 
-    <Button
-      class="w-full bg-linear-to-r from-cyan-700 to-blue-500 text-slate-200 hover:cursor-pointer hover:from-cyan-800 hover:to-blue-600"
-      variant="default"
-    >
-      View Simbrief Flightplan
-      <ArrowRight class="ml-2" />
-    </Button>
-  </Card.Content>
-</Card.Root>
+      <Button
+        class="w-full bg-linear-to-r from-cyan-700 to-blue-500 text-slate-200 hover:cursor-pointer hover:from-cyan-800 hover:to-blue-600"
+        variant="default"
+      >
+        View Simbrief Flightplan
+        <ArrowRight class="ml-2" />
+      </Button>
+    </Card.Content>
+  </Card.Root>
+</div>

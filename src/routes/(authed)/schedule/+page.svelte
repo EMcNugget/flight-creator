@@ -1,5 +1,6 @@
 <script lang="ts">
   import ScheduleCard from './ScheduleCard.svelte';
+  import * as Carousel from '$lib/components/ui/carousel/index.js';
   import * as Pagination from '$lib/components/ui/pagination/index.js';
   import ChevronLeft from '@lucide/svelte/icons/chevron-left';
   import ChevronRight from '@lucide/svelte/icons/chevron-right';
@@ -74,20 +75,35 @@
 {#if !loadingComplete}
   <Progress value={75} message="Loading your schedule" />
 {:else}
-  <div class="flex flex-col items-center justify-between space-y-10">
+  <div class="m-6 flex flex-col items-center justify-between space-y-10">
     <h1 class="text-3xl font-bold text-slate-200 text-shadow-lg">Current Schedule</h1>
+    <script lang="ts">
+      import * as Card from '$lib/components/ui/card/index.js';
+      import * as Carousel from '$lib/components/ui/carousel/index.js';
+    </script>
 
-    <div class="xs:grid-cols-1 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-      {#each bidData as props}
-        <ScheduleCard
-          flightNumber={props.flightNumber}
-          departure={props.departure}
-          arrival={props.arrival}
-          blockTime={props.blockTime}
-          equipment={props.equipment}
-        />
-      {/each}
-    </div>
+    <Carousel.Root
+      opts={{
+        loop: false
+      }}
+    >
+      <Carousel.Content>
+        {#each bidData as props, i}
+          <Carousel.Item class="md:basis-1/2 lg:basis-1/3 ">
+            <ScheduleCard
+              showNextLeg={i === 0}
+              flightNumber={props.flightNumber}
+              departure={props.departure}
+              arrival={props.arrival}
+              blockTime={props.blockTime}
+              equipment={props.equipment}
+            />
+          </Carousel.Item>
+        {/each}
+      </Carousel.Content>
+      <Carousel.Previous />
+      <Carousel.Next />
+    </Carousel.Root>
 
     <Pagination.Root count={5} perPage={1}>
       {#snippet children({ pages, currentPage })}
