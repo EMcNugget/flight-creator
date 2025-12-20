@@ -18,16 +18,16 @@
 
   form;
 
-  const { form: formData, enhance, errors } = form;
+  const { form: formData, enhance } = form;
 </script>
 
 <div class="mb-12 flex flex-col items-center gap-2">
   <h1
-    class="bg-linear-to-r from-cyan-400 to-blue-300 bg-clip-text text-4xl font-bold text-transparent drop-shadow-lg"
+    class="text-5xl font-extrabold tracking-tight text-white drop-shadow-[0_2px_12px_rgba(56,189,248,0.35)]"
   >
-    vBS - Virtual Bid System
+    vBS <span class="text-cyan-400">-- Virtual Bid System</span>
   </h1>
-  <p class="font-semibold text-white text-shadow-lg">Your flight sim schedule made simple</p>
+  <p class="font-semibold text-slate-200 text-shadow-lg">Your flight sim schedule made simple</p>
 </div>
 <Card.Root
   class="
